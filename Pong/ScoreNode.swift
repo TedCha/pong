@@ -25,6 +25,7 @@ class ScoreNode: SKLabelNode {
         self.fontName = "Arial"
         self.color = .white
         self.fontSize = 60
+        self.text = "0"
     }
 
     required init?(coder: NSCoder) {

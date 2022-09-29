@@ -13,7 +13,7 @@ class PaddleNode: SKSpriteNode {
     
     init(_ side: Side) {
         self.side = side
-        super.init(texture: nil, color: .white, size: CGSizeMake(20, 150))
+        super.init(texture: nil, color: .white, size: CGSizeMake(20, 140))
     
         self.physicsBody = SKPhysicsBody(rectangleOf: size).manualMovement()
         self.physicsBody?.categoryBitMask = PhysicsCategory.paddle
@@ -56,8 +56,8 @@ class PaddleNode: SKSpriteNode {
             bounceAngle = CGFloat.pi - bounceAngle
         }
         
-        let ballVx = 400 * cos(bounceAngle);
-        let ballVy = 400 * -sin(bounceAngle);
+        let ballVx = 500 * cos(bounceAngle);
+        let ballVy = 500 * -sin(bounceAngle);
         
         return CGVectorMake(ballVx, ballVy)
     }
