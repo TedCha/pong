@@ -37,7 +37,7 @@ class ScoreNode: SKLabelNode {
     }
     
     func setup() {
-        guard let parentFrame = parent?.frame else { fatalError("node must be added to tree to use") }
+        guard let parentFrame = parent?.frame else { fatalError("node must have parent") }
         switch (side) {
         case .right:
             self.position = CGPointMake(parentFrame.midX + marginLeft, parentFrame.maxY - (fontSize + marginTop))

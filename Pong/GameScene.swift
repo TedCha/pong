@@ -34,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverLabel = SKLabelNode(fontNamed: "Arial")
     
     func setupPhysics() {
+        // no gravity in scene
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         self.physicsWorld.contactDelegate = self
     }
@@ -92,21 +93,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         gameOverLabel.color = .white
         gameOverLabel.position = CGPointMake(frame.midX, frame.midY)
         
-        // Spooky opponent AI ;)
+        // spooky opponent AI ;)
         leftPaddle.run(SKAction.customAction(withDuration: TimeInterval(Int.max), actionBlock: {
             node, elapsedTime in
             if self.state == .started {
                 node.run(SKAction.moveTo(y: self.ball.position.y, duration: Double.random(in:0.15...0.259)))
             }
         }))
-    }
-    
-    func reset() {
-        gameOverLabel.removeFromParent()
-        rightScore.reset()
-        leftScore.reset()
-        ball.reset()
-        stop()
     }
     
     func start() {
@@ -122,6 +115,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func gameOver() {
         state = .gameOver
         addChild(gameOverLabel)
+    }
+    
+    func reset() {
+        gameOverLabel.removeFromParent()
+        rightPaddle.reset()
+        leftPaddle.reset()
+        rightScore.reset()
+        leftScore.reset()
+        ball.reset()
+        stop()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -151,6 +154,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if targetScore.value == maxScore {
                 gameOver()
             } else {
+                // small delay before starting the game
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     self.start()
                 }

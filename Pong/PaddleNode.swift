@@ -25,16 +25,9 @@ class PaddleNode: SKSpriteNode {
     }
     
     func setup() {
-        guard let parentFrame = parent?.frame else { fatalError("node must be added to tree to use") }
+        guard let parentFrame = parent?.frame else { fatalError("node must have parent") }
                 
-        switch (side) {
-        case .right:
-            self.position = CGPointMake(parentFrame.maxX - (size.width/2), parentFrame.midY)
-        case .left:
-            self.position = CGPointMake(parentFrame.minX + (size.width/2), parentFrame.midY)
-        case .none:
-            fatalError("node must be .left or .right")
-        }
+        reset()
         
         let movementConstraint = SKConstraint.positionY(
             SKRange(
@@ -43,6 +36,19 @@ class PaddleNode: SKSpriteNode {
             )
         )
         self.constraints = [movementConstraint]
+    }
+    
+    func reset() {
+        guard let parentFrame = parent?.frame else { fatalError("node must have parent") }
+        
+        switch (side) {
+        case .right:
+            self.position = CGPointMake(parentFrame.maxX - (size.width/2), parentFrame.midY)
+        case .left:
+            self.position = CGPointMake(parentFrame.minX + (size.width/2), parentFrame.midY)
+        case .none:
+            fatalError("node must be .left or .right")
+        }
     }
 
     // https://gamedev.stackexchange.com/a/4255
